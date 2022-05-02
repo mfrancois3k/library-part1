@@ -35,21 +35,23 @@ app.post('/book', async (req, res) => {
     }
 })
 
-app.put('/books/:id', async (req, res) => {
+app.put("/books/:id", async (req, res)=> {
   try {
-    const { id } = req.params;
-    bookModel.findByIdAndUpate(id, req.body, { new: true }, (err, book) => {
-       if (err) {
-         res.status(500).send(err);
-       }
-       if (!book) {
-         res.status(500).send("Book Not Found");
-       }
-       return res.status(200).json(book);
+    const { id } = req.params; 
+    bookModel.findByIdAndUpdate(id, req.body, {new:true}, (err, book) => {
+      
+        if (err) {
+            return res.status(500).send(err)
+        }
+        if (!book) {
+            return res.status(500).send('item not found')
+        }
+        return res.status(200).json(book)
     })
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
+    
+}catch(err){
+    return res.status(500).send(err.message)
+}
 })
 
 app.delete('/books/:id', async (request, response) => {
